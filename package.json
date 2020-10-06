@@ -8,7 +8,8 @@
     "npm": "6.14.6"
   },
   "scripts": {
-    "start": "node index"
+    "start": "node index",
+    "dev": "nodemon index.js"
   },
   "author": "",
   "license": "ISC",

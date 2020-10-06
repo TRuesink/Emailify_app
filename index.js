@@ -7,6 +7,7 @@ const keys = require("./config/keys");
 
 const app = express();
 
+// Set up for passport
 passport.use(
   new GoogleStrategy(
     {
@@ -14,18 +15,24 @@ passport.use(
       clientSecret: keys.googleClientSecret,
       callbackURL: "/auth/google/callback",
     },
-    (accessToken) => {
-      console.log(accessToken);
+    (accessToken, refreshToken, profile, done) => {
+      console.log("access token", accessToken);
+      console.log("refresh token", refreshToken);
+      console.log("profile", profile);
     }
   )
 );
 
+// google authentication route
 app.get(
   "/auth/google",
   passport.authenticate("google", {
     scope: ["profile", "email"],
   })
 );
+
+// google authentication callback route
+app.get("/auth/google/callback", passport.authenticate("google"));
 
 // logic for PORT choice
 const PORT = process.env.PORT || 5000;
