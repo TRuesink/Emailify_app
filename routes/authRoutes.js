@@ -9,11 +9,17 @@ module.exports = (app) => {
   );
 
   // google authentication callback route
-  app.get("/auth/google/callback", passport.authenticate("google"));
+  app.get(
+    "/auth/google/callback",
+    passport.authenticate("google"),
+    (req, res) => {
+      res.redirect("/surveys");
+    }
+  );
 
   app.get("/api/logout", (req, res) => {
     req.logout(); // kills the cookie
-    res.send("You have been signed out");
+    res.redirect("/");
   });
 
   app.get("/api/current_user", (req, res) => {
