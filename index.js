@@ -3,6 +3,7 @@ const mongoose = require("mongoose");
 const keys = require("./config/keys");
 const cookieSession = require("cookie-session");
 const passport = require("passport");
+const bodyParser = require("body-parser");
 require("./models/User");
 require("./services/passport");
 
@@ -11,6 +12,7 @@ mongoose.connect(keys.mongoURI);
 
 const app = express();
 
+app.use(bodyParser.json());
 // cookie-session stores all data in a cookie. express-session stores data outside the cookie
 // middleware that alters request for every request
 app.use(
@@ -24,6 +26,7 @@ app.use(passport.session());
 
 // bring in google authentication routes
 require("./routes/authRoutes")(app);
+require("./routes/billingRoutes")(app);
 
 // logic for PORT choice
 const PORT = process.env.PORT || 5000;
