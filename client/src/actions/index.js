@@ -1,5 +1,5 @@
 import axios from "axios";
-import { FETCH_USER } from "./types";
+import { FETCH_USER, FETCH_SURVEYS } from "./types";
 
 // we use redux thunk because we don't want to dispatch an action until request is completed
 // redux thunk gives you access to the dispatch funtion
@@ -18,4 +18,10 @@ export const submitSurvey = (values, history) => async (dispatch) => {
 
   history.push("/surveys");
   dispatch({ type: FETCH_USER, payload: res.data });
+};
+
+export const fetchSurveys = () => async (dispatch) => {
+  const res = await axios.get("/api/surveys");
+
+  dispatch({ type: FETCH_SURVEYS, payload: res.data });
 };
